@@ -1,3 +1,5 @@
+Exercise (Validate Credit or Debit Card):
+
 def card_validation(number):
     cc_number_list = [int(digit) for digit in str(number)]  # create a list from the numbers used in function call
     length = len(cc_number_list)  # create a variable "length"

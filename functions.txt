@@ -1,0 +1,39 @@
+def card_validation(number):
+    cc_number_list = [int(digit) for digit in str(number)]  # create a list from the numbers used in function call
+    length = len(cc_number_list)  # create a variable "length"
+    if length % 2 == 0:    #  if the length of the cc numbers list is even, below are instructions to get every second item
+                           # from the reversed list and the remainder
+        reversed_cc_number_list = list(reversed(cc_number_list[::2]))
+        remaining_cc_numbers = cc_number_list[1::2]
+    else:     # if the length is an odd number, see below
+        reversed_cc_number_list = list(reversed(cc_number_list[1:-1:2]))
+        remaining_cc_numbers = cc_number_list[::2]
+
+    multiplied_reversed_cc_number_list = [i * 2 for i in reversed_cc_number_list] # multiply the items in first list
+
+    sum_of_digits_in_reversed = []     # calculate the sum of each digit in the multiplied_reversed list
+    for elem in multiplied_reversed_cc_number_list:
+        sum_val = 0
+        for digit in str(elem):
+            sum_val += int(digit)
+        sum_of_digits_in_reversed.append(sum_val)
+
+# Addition of two lists:
+# Declare a separate function to handle the addition:
+    def checksum(sum_of_digits_in_reversed, remaining_cc_numbers):
+        return sum_of_digits_in_reversed + remaining_cc_numbers
+# Pass the function and the two lists into the built-in map() function:
+    addition = sum(map(checksum, remaining_cc_numbers, sum_of_digits_in_reversed))
+
+    last_digit = int(repr(addition)[-1])   # checking the last digit of checksum
+    if last_digit == 0:
+        if len(cc_number_list) == 15 and cc_number_list[0] == 3 and cc_number_list[1] == 4 or cc_number_list[1] == 7:
+            return ("AMEX")
+        if len(cc_number_list) == 16 and cc_number_list[0] == 5 and (cc_number_list[1] == 1 or cc_number_list[1] == 2 or cc_number_list == 3 or cc_number_list == 4 or cc_number_list[1] == 5):
+            return ("MASTERCARD")
+        if len(cc_number_list) == 13 or len(cc_number_list) == 16 and cc_number_list[0] == 4:
+            return ("VISA")
+    else:
+        return ("INVALID")
+
+print(card_validation(4111111111111111))
